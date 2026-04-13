@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  margin: 0 auto;
+  width: 1200px;
+  max-width: 80%;
+}
+.wrapper {
+  margin-top: 20px;
+  position: relative;
+}
+
+.tips {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid black;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  cursor: pointer;
+}
+
+li:hover {
+  background-color: rgb(189, 189, 254);
+}
