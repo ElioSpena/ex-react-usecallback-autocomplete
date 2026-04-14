@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [id, setId] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
@@ -31,9 +33,18 @@ function App() {
       setProducts([]);
       return;
     }
-
     startFetch(query);
   }, [query]);
+
+  useEffect(() => {
+    if (!id) return;
+
+    (async () => {
+      const resp = await fetch(`http://localhost:3333/products/${id}`);
+      const result = await resp.json();
+      setSelectedProduct(result);
+    })();
+  }, [id]);
 
   console.log(products);
 
@@ -59,6 +70,7 @@ function App() {
                 key={p.id}
                 onClick={() => {
                   setQuery(p.name);
+                  setId(p.id);
                   setOpen(false);
                 }}
               >
@@ -68,6 +80,19 @@ function App() {
           </ul>
         )}
       </div>
+
+      <ul>
+        {selectedProduct && !open && (
+          <li key={selectedProduct.id}>
+            <h3>{selectedProduct.name}</h3>
+            <strong>{selectedProduct.brand}</strong>
+            <figure>
+              <img src={selectedProduct.image} alt={selectedProduct.name} />
+            </figure>
+            <p>{selectedProduct.description}</p>
+          </li>
+        )}
+      </ul>
     </main>
   );
 }

@@ -3,6 +3,11 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+li {
+  list-style: none;
+}
+
 .container {
   margin: 0 auto;
   width: 1200px;
@@ -21,10 +26,9 @@
   border: 1px solid black;
   margin: 0;
   padding: 0;
-  list-style: none;
   cursor: pointer;
 }
 
-li:hover {
+.tips li:hover {
   background-color: rgb(189, 189, 254);
 }
