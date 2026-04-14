@@ -1,22 +1,38 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function App() {
-  const [query, setQuery] = useState("");
   const [products, setProducts] = useState([]);
   const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+
+  function debounce(callback, delay) {
+    let timer;
+    return (value) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        callback(value);
+      }, delay);
+    };
+  }
+
+  const startFetch = useCallback(
+    debounce(async (query) => {
+      const resp = await fetch(
+        `http://localhost:3333/products?search=${query}`,
+      );
+      const result = await resp.json();
+      setProducts(result);
+    }, 1000),
+    [],
+  );
 
   useEffect(() => {
     if (query === "") {
       setProducts([]);
       return;
     }
-    (async () => {
-      const resp = await fetch(
-        `http://localhost:3333/products?search=${query}`,
-      );
-      const result = await resp.json();
-      setProducts(result);
-    })();
+
+    startFetch(query);
   }, [query]);
 
   console.log(products);
