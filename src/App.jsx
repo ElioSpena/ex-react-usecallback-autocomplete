@@ -39,9 +39,13 @@ function App() {
     if (!id) return;
 
     (async () => {
-      const resp = await fetch(`http://localhost:3333/products/${id}`);
-      const result = await resp.json();
-      setSelectedProduct(result);
+      try {
+        const resp = await fetch(`http://localhost:3333/products/${id}`);
+        const result = await resp.json();
+        setSelectedProduct(result);
+      } catch (err) {
+        console.log(err.message);
+      }
     })();
   }, [id]);
 
@@ -54,6 +58,7 @@ function App() {
           <h3>Cerca il prodotto:</h3>
         </label>
         <input
+          autoComplete="off"
           id="query-input"
           type="text"
           value={query}
@@ -81,7 +86,7 @@ function App() {
 
       <ul>
         {selectedProduct && (
-          <li key={selectedProduct.id}>
+          <li key={selectedProduct.id} className="card">
             <h3>{selectedProduct.name}</h3>
             <strong>{selectedProduct.brand}</strong>
             <figure>

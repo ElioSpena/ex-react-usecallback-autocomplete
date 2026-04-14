@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  font-family: "Segoe UI", sans-serif;
+}
+
 li {
   list-style: none;
 }
@@ -14,7 +18,7 @@ li {
   max-width: 80%;
 }
 .wrapper {
-  margin-top: 20px;
+  margin-top: 12px;
   position: relative;
 }
 
@@ -31,4 +35,18 @@ li {
 
 .tips li:hover {
   background-color: rgb(189, 189, 254);
+}
+
+.card {
+  text-align: center;
+  background-color: rgb(198, 198, 255);
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 12px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+input {
+  padding: 4px;
 }
