@@ -4,7 +4,6 @@ function App() {
   const [products, setProducts] = useState([]);
   const [id, setId] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
 
   function debounce(callback, delay) {
@@ -29,12 +28,12 @@ function App() {
   );
 
   useEffect(() => {
-    if (query === "") {
+    if (!query.trim() || id) {
       setProducts([]);
       return;
     }
     startFetch(query);
-  }, [query]);
+  }, [query, startFetch, id]);
 
   useEffect(() => {
     if (!id) return;
@@ -60,10 +59,9 @@ function App() {
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
-            setOpen(true);
           }}
         />
-        {open && query && (
+        {products.length > 0 && (
           <ul className="tips">
             {products.map((p) => (
               <li
@@ -71,7 +69,6 @@ function App() {
                 onClick={() => {
                   setQuery(p.name);
                   setId(p.id);
-                  setOpen(false);
                 }}
               >
                 {p.name}
@@ -82,7 +79,7 @@ function App() {
       </div>
 
       <ul>
-        {selectedProduct && !open && (
+        {selectedProduct && (
           <li key={selectedProduct.id}>
             <h3>{selectedProduct.name}</h3>
             <strong>{selectedProduct.brand}</strong>
