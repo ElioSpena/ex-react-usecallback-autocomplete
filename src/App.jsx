@@ -28,12 +28,12 @@ function App() {
   );
 
   useEffect(() => {
-    if (!query.trim() || id) {
+    if (!query.trim()) {
       setProducts([]);
       return;
     }
     startFetch(query);
-  }, [query, startFetch, id]);
+  }, [query]);
 
   useEffect(() => {
     if (!id) return;
@@ -67,8 +67,9 @@ function App() {
               <li
                 key={p.id}
                 onClick={() => {
-                  setQuery(p.name);
+                  setQuery("");
                   setId(p.id);
+                  setProducts([]);
                 }}
               >
                 {p.name}
@@ -87,6 +88,10 @@ function App() {
               <img src={selectedProduct.image} alt={selectedProduct.name} />
             </figure>
             <p>{selectedProduct.description}</p>
+            <p>
+              <strong>Price: </strong>
+              {selectedProduct.price} €
+            </p>
           </li>
         )}
       </ul>
